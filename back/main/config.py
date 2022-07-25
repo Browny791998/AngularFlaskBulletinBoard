@@ -5,6 +5,7 @@ from sqlalchemy import event
 from flask import current_app
 
 from main.controller.user_controller import user_namespace
+from main.controller.post_controller import post_namespace
 from flask import Blueprint
 from flask_cors import CORS
 from decouple import config
@@ -35,7 +36,33 @@ blueprint = Blueprint("api", __name__)
 api = Api(blueprint, authorizations=authorizations)
 
 api.add_namespace(user_namespace)
+api.add_namespace(post_namespace)
 
 
 
 
+# # initilize data after table is created
+@event.listens_for(User.__table__, "after_create")
+def receive_after_create(target, connection, **kw):
+
+    with app.app_context():
+        # Recreate database each time for demo
+        db.session.add(
+            User(
+                name="Ye Htet Aung",
+                email="scm.yehtetaung@gmail.com",
+                password="1234",
+                profile_photo="",
+                type="0",
+                phone="123123",
+                address="Yangon",
+                dob="2022-01-17",
+                create_user_id=1,
+                updated_user_id=1,
+                deleted_user_id=1,
+                created_at="2016-03-13 02:32:21",
+                updated_at="2016-03-13 02:32:21",
+                deleted_at="2016-03-13 02:32:21"
+            )
+        )
+        db.session.commit()

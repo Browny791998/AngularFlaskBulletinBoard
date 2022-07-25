@@ -1,4 +1,4 @@
-from typing_extensions import Required
+
 from attr import field
 from flask_restx import Namespace,fields
 
@@ -17,12 +17,12 @@ class UserDto:
          "phone":fields.String(required=True),
          "address":fields.String(),
          "dob":fields.Date(),
-         "create_user_id":fields.Integer(required = True),
-         "updated_user_id":fields.Integer(Required = True),
-         "deleted_user_id":fields.Integer(),
-         "created_at":fields.Date(required = True),
-         "updated_at":fields.Date(required = True),
-         "deleted_at":fields.Date()
+        #  "create_user_id":fields.Integer(required = True),
+        #  "updated_user_id":fields.Integer(Required = True),
+        #  "deleted_user_id":fields.Integer(),
+        #  "created_at":fields.Date(required = True),
+        #  "updated_at":fields.Date(required = True),
+        #  "deleted_at":fields.Date()
            
           
         }
