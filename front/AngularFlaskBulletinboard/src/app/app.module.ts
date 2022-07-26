@@ -9,11 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
+import { PostConfirmComponent } from './posts/post-confirm/post-confirm.component';
 @NgModule({
   declarations: [
     AppComponent,
     PostListComponent,
-    PostCreateComponent
+    PostCreateComponent,
+    PostConfirmComponent
   ],
   imports: [
     BrowserModule,

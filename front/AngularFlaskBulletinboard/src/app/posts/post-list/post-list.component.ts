@@ -37,4 +37,16 @@ onAdd(){
   this.router.navigate(['post/create']);
 }
 
+onDelete(id: any) {
+  if (window.confirm('Are you sure, you want to delete?')) {
+    this.postSvc.deletePost(id).subscribe((data) => {
+      this.loadPosts();
+    });
+  }
+}
+
+onUpdate(id: any) {
+  this.router.navigate(['/post/create'], { queryParams: { postId: id } });
+}
+
 }

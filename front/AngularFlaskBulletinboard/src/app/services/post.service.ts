@@ -17,6 +17,39 @@ export class PostService {
     }),
   };
 
+  postDetail:any;
+
+
+  //set Post
+  setPost(data:any){
+    this.postDetail = data;
+  }
+
+  //get Post
+  getPost(){
+    return this.postDetail;
+  }
+
+  createPost(post:any):Observable<Post>{
+    return this.http.post<any>(
+      this.apiURL + '/post/create',
+      JSON.stringify(post),
+      this.httpOptions
+    )
+  }
+
+  deletePost(id:any){
+    return this.http
+    .delete<Post>(this.apiURL + '/post/delete/' +id,this.httpOptions)
+  }
+
+  getSinglePost(id:any): Observable<Post> {
+    return this.http
+       .get<Post>(this.apiURL + '/post/get/'+id,this.httpOptions)
+       
+   }
+
+
   getAllPosts():Observable<Post>{
     return this.http
     .get<Post>(this.apiURL + '/post/getAll',this.httpOptions)
