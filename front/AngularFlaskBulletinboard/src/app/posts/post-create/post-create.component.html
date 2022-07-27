@@ -27,7 +27,7 @@
   
     
   <div class="example-full-width" appearance="fill" *ngIf="postId">
-    <span>Status</span><br>  <mat-slide-toggle [checked]="this.status">
+    <span>Status</span><br>  <mat-slide-toggle [checked]="this.status" (change)="onChange($event)">
       </mat-slide-toggle>
     </div>
   
@@ -35,6 +35,6 @@
     
     <button mat-raised-button color="warn" style="margin-right: 10px;" (click)="postForm.reset()">Reset</button>
     <button mat-raised-button color="primary" *ngIf="!postId"  [disabled]="postForm.invalid" (click)="Add()">Confirm</button>
-    <button mat-raised-button color="primary" *ngIf="postId" [disabled]="postForm.invalid" >Edit</button>
+    <button mat-raised-button color="primary" *ngIf="postId" [disabled]="postForm.invalid" (click)="Edit()">Edit</button>
   </form>
   

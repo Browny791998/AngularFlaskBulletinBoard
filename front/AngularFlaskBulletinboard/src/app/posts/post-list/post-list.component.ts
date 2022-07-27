@@ -29,6 +29,15 @@ export class PostListComponent implements OnInit {
        this.posts = data;
        this.dataSource = new MatTableDataSource(this.posts);
        this.dataSource.paginator = this.paginator;
+       this.dataSource.sortingDataAccessor = (item: any, property: any) => {
+        switch (property) {
+          case 'Title': return item.title;
+          case 'Description': return item.description;
+          case 'CreatedAt': return item.created_at;
+          
+          default: return item[property];
+        }
+      };
        this.dataSource.sort = this.sort;
     })
   }

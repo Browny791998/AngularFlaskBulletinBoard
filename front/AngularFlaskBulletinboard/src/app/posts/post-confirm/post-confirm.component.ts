@@ -17,17 +17,34 @@ export class PostConfirmComponent implements OnInit {
   ngOnInit(): void {
     this.postDetail = this.postSvc.getPost();
     this.postId = this.postDetail.id;
+  
   }
 
   CreatePost(){
-    this.postSvc.createPost(
-      {
-        title:this.postDetail.data.PostTitle,
-        description:this.postDetail.data.PostDescription,
-       status:1
-      }
-    ).subscribe((data:any)=>{
-      this.router.navigate(["posts"]);
-    })
+    if(this.postId){
+   
+      this.postSvc.updatePost(this.postId,{
+       
+          title: this.postDetail.data.PostTitle,
+          description: this.postDetail.data.PostDescription,
+          status:this.postDetail.status
+        
+      }).subscribe((data: any) => {
+        this.router.navigate(["posts"]);
+    });
+    
+    }
+    else{
+      this.postSvc.createPost(
+        {
+          title:this.postDetail.data.PostTitle,
+          description:this.postDetail.data.PostDescription,
+         status:1
+        }
+      ).subscribe((data:any)=>{
+        this.router.navigate(["posts"]);
+      })
+    }
+  
   }
 }

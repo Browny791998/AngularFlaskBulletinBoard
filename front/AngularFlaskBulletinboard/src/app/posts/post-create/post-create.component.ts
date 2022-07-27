@@ -42,23 +42,23 @@ export class PostCreateComponent implements OnInit {
     if (this.postId) {
       this.action="Edit";
       return await this.postSvc.getSinglePost(this.postId).subscribe((data: any) => {
-        this.postDetail = data.data;
-        this.status = this.postDetail.attributes.PostStatus;
-        this.postForm.get("PostDescription")?.setValue(this.postDetail.attributes.PostDescription);
-        this.postForm.get("PostTitle")?.setValue(this.postDetail.attributes.PostTitle);
+        this.postDetail = data;
+        this.status = this.postDetail.status;
+        this.postForm.get("PostDescription")?.setValue(this.postDetail.description);
+        this.postForm.get("PostTitle")?.setValue(this.postDetail.title);
       });
     }
     else {
-      // this.postDetail = await this.postService.getPost();
-      // const postData = this.postDetail;
-      // if (postData?.data.PostTitle && postData?.data.PostDescription) {
-      //   this.postForm.get("PostDescription")?.setValue(postData.data.PostDescription);
-      //   this.postForm.get("PostTitle")?.setValue(postData.data.PostTitle);
-      // } else {
-      //   this.postForm.get("PostDescription")?.setValue("");
-      //   this.postForm.get("PostTitle")?.setValue("");
-      // }
-      // return;
+       this.postDetail = await this.postSvc.getPost();
+       const postData = this.postDetail;
+       if (postData?.data.PostTitle && postData?.data.PostDescription) {
+         this.postForm.get("PostDescription")?.setValue(postData.data.PostDescription);
+         this.postForm.get("PostTitle")?.setValue(postData.data.PostTitle);
+       } else {
+         this.postForm.get("PostDescription")?.setValue("");
+         this.postForm.get("PostTitle")?.setValue("");
+       }
+       return;
     }
   }
 
@@ -68,6 +68,19 @@ export class PostCreateComponent implements OnInit {
       data: this.postForm.value
     });
     this.router.navigate(["post/confirm"]);
+  }
+
+  Edit() {
+    this.postSvc.setPost({
+      id: this.postId,
+      status: this.status,
+      data: this.postForm.value
+    });
+    this.router.navigate(["post/confirm"]);
+  }
+
+  onChange($event: any) {
+    $event.checked ? this.status = true : this.status = false;
   }
 
 }

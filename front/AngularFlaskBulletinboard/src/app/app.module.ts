@@ -10,12 +10,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostConfirmComponent } from './posts/post-confirm/post-confirm.component';
+import { UserCreateComponent } from './users/user-create/user-create.component';
+import { UsersListComponent } from './users/users-list/users-list.component';
+import { UserConfirmComponent } from './users/user-confirm/user-confirm.component';
 @NgModule({
   declarations: [
     AppComponent,
     PostListComponent,
     PostCreateComponent,
-    PostConfirmComponent
+    PostConfirmComponent,
+    UserCreateComponent,
+    UsersListComponent,
+    UserConfirmComponent
   ],
   imports: [
     BrowserModule,
