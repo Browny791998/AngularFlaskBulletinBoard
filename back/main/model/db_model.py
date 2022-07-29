@@ -19,7 +19,7 @@ class User(db.Model):
     type = db.Column(db.String(1), nullable=False,default = "1")
     phone = db.Column(db.String(20),nullable=False)
     address = db.Column(db.String(255))
-    dob = db.Column(db.Date())
+    dob = db.Column(db.String(255))
     create_user_id = db.Column(db.Integer,nullable=False)
     updated_user_id = db.Column(db.Integer,nullable=False)
     deleted_user_id = db.Column(db.Integer)
@@ -50,7 +50,7 @@ class UserSchema(Schema):
     )
     phone = fields.String(required=True)
     address = fields.String()
-    dob = fields.Date()
+    dob = fields.String()
     # create_user_id = fields.Integer(
     #     required=True
     # )

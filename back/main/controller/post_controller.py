@@ -69,3 +69,4 @@ class updatePost(Resource):
         except NotFoundErr as e3:
             return e3.args, 400
         return "Successully Updated"
+

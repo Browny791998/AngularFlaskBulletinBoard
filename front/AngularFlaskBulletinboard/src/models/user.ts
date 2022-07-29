@@ -1,7 +1,7 @@
 export class User{
     username!:string;
     email!:string;
-    type!:boolean;
+    type!:string;
     phone!:number;
     address!:string;
     dob!:Date;

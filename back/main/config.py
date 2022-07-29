@@ -1,3 +1,7 @@
+
+
+from fileinput import filename
+import os
 from flask import Flask, redirect,render_template, request
 from flask_restx import Api
 from main.model.db_model import User,db
@@ -9,12 +13,30 @@ from main.controller.post_controller import post_namespace
 from flask import Blueprint
 from flask_cors import CORS
 from decouple import config
-
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
 
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] =UPLOAD_FOLDER
+
+@app.route('/profile',methods=['POST'])
+def upload_profile():
+    if request.method == 'POST':
+         pic =request.files["profileImg"]
+         if not pic:
+          return 'No pic uploaded',400
+    
+         filename = secure_filename(pic.filename)
+         pic.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+         return "success"
+    
+
+
+
 CORS(app)
+
 
 
 # Data Base
@@ -42,27 +64,27 @@ api.add_namespace(post_namespace)
 
 
 # # initilize data after table is created
-@event.listens_for(User.__table__, "after_create")
-def receive_after_create(target, connection, **kw):
+# @event.listens_for(User.__table__, "after_create")
+# def receive_after_create(target, connection, **kw):
 
-    with app.app_context():
+    # with app.app_context():
         # Recreate database each time for demo
-        db.session.add(
-            User(
-                name="Ye Htet Aung",
-                email="scm.yehtetaung@gmail.com",
-                password="1234",
-                profile_photo="",
-                type="0",
-                phone="123123",
-                address="Yangon",
-                dob="2022-01-17",
-                create_user_id=1,
-                updated_user_id=1,
-                deleted_user_id=1,
-                created_at="2016-03-13 02:32:21",
-                updated_at="2016-03-13 02:32:21",
-                deleted_at="2016-03-13 02:32:21"
-            )
-        )
-        db.session.commit()
+        # db.session.add(
+        #     User(
+        #         name="Ye Htet Aung",
+        #         email="scm.yehtetaung@gmail.com",
+        #         password="1234",
+        #         profile_photo="",
+        #         type="0",
+        #         phone="123123",
+        #         address="Yangon",
+        #         dob="2022-01-17",
+        #         create_user_id=1,
+        #         updated_user_id=1,
+        #         deleted_user_id=1,
+        #         created_at="2016-03-13 02:32:21",
+        #         updated_at="2016-03-13 02:32:21",
+        #         deleted_at="2016-03-13 02:32:21"
+        #     )
+        # )
+        # db.session.commit()

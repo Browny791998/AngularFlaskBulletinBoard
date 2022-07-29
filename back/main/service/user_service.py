@@ -51,15 +51,16 @@ def saveUser(potentialNewUser):
         updated_at=datetime.datetime.now(),
         deleted_at=datetime.datetime.now(),
     )
+    db.session.add(saveUser)
+    db.session.commit()
 
-    try:
-        db.session.add(saveUser)
-        db.session.commit()
-    except exc.IntegrityError:
-        db.session.rollback()
-        raise ValueError(common_constant.EMAIL_TAKEN_ERR)
-    finally:
-        db.session.close()
+    # try:
+    #     db.session.add(saveUser)
+    #     db.session.commit()
+    # except exc.IntegrityError:
+    #     db.session.rollback()
+    # finally:
+    #     db.session.close()
 
 
 

@@ -36,5 +36,22 @@ export class UserService {
        .get<User>(this.apiURL+'/user/getAll',this.httpOptions)
    }
 
+    // HttpClient API post() method => Create user
+  createUser(user: any): Observable<User> {
+    console.log(user);
+    return this.http
+      .post<any>(
+        this.apiURL + '/user/create',
+        JSON.stringify(user),
+        this.httpOptions
+      )
+  }
+
+  deleteUser(id:any){
+    return this.http
+    .delete<User>(this.apiURL + '/user/delete/' +id,this.httpOptions)
+  }
+
+
 
 }

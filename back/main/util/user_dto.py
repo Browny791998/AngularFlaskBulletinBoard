@@ -16,7 +16,7 @@ class UserDto:
          "type": fields.String(required = True),
          "phone":fields.String(required=True),
          "address":fields.String(),
-         "dob":fields.Date(),
+         "dob":fields.String(),
         #  "create_user_id":fields.Integer(required = True),
         #  "updated_user_id":fields.Integer(Required = True),
         #  "deleted_user_id":fields.Integer(),

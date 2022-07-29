@@ -38,4 +38,17 @@ export class UsersListComponent implements OnInit {
       this.dataSource.sort = this.sort;
     })
   }
+
+  onDelete(id: any) {
+    if (window.confirm('Are you sure, you want to delete?')) {
+  
+        this.userSvc.deleteUser(id).subscribe((data) => {
+          this.loadUsers();
+        });
+    
+
+    }
+  }
+
+
 }

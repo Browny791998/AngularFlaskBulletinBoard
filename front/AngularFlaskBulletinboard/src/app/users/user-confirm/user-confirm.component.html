@@ -1,5 +1,6 @@
 <h1>Create Post Confirmation</h1>
 
+<form>
 <table class="confrimTable">
   <tr>
     <td>Name</td>
@@ -8,41 +9,43 @@
 
   <tr>
     <td>Email Address</td>
-    <td>{{userDetail.data.email}}</td>
+    <td>{{userDetail.data.Email}}</td>
   </tr>
 
   <tr>
     <td>Password</td>
-    <td>{{hashPassword(userDetail.data.password)}}</td>
+    <td>{{hashPassword(userDetail.data.Password)}}</td>
   </tr>
 
   <tr>
     <td>Type</td>
-    <td>{{userDetail.data.type == 0? "Admin":"User"}}</td>
+    <td>{{userDetail.data.Type == 0? "Admin":"User"}}</td>
   </tr>
 
   <tr>
     <td>Phone</td>
-    <td>{{userDetail.data.phone}}</td>
+    <td>{{userDetail.data.Phone}}</td>
   </tr>
 
   <tr>
     <td>Date of Birth</td>
-    <td>{{userDetail.data.dob |  date: 'dd/MM/yyyy'}}</td>
+    <td>{{userDetail.data.DOB |  date: 'dd/MM/yyyy'}}</td>
   </tr>
 
   <tr>
     <td>Address</td>
-    <td>{{userDetail.data.address}}</td>
+    <td>{{userDetail.data.Address}}</td>
   </tr>
   <tr>
     <td>Profile</td>
+   
     <td> <img width="200" height="200" style="border-radius:15px;" src={{userDetail.profile}}></td>
   </tr>
 
   <tr>
-    <td><button mat-raised-button color="accent" >Create</button></td>
+   
+    <td><button mat-raised-button color="accent" (click)="createConfirm()">Create</button></td>
     <td><button mat-raised-button color="warn" >Cancel</button></td>
   </tr>
 </table>
-
+</form>

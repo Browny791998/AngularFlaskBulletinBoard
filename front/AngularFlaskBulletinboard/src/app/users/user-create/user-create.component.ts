@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserCreateComponent implements OnInit {
   url:any;
   file=null;
+  fileDestination:any;
   constructor(private fb:FormBuilder,private userSvc:UserService,private router:Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -19,46 +20,46 @@ export class UserCreateComponent implements OnInit {
 
   userForm = this.fb.group({
     Name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-    password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[!@#&()\-/$=<>?])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#&()\-/$=<>?]+$'),
+    Email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+    Password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[!@#&()\-/$=<>?])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#&()\-/$=<>?]+$'),
     Validators.minLength(5), Validators.maxLength(8)]],
-    confirmPassword: ['', Validators.required],
-    type: ['', [Validators.required]],
-    phone: ['', [Validators.required]],
-    dob: ['', [Validators.required]],
-    address: ['']
+    ConfirmPassword: ['', Validators.required],
+    Type: ['', [Validators.required]],
+    Phone: ['', [Validators.required]],
+    DOB: ['', [Validators.required]],
+    Address: ['']
   },
 
     {
-      validators: this.MustMatch('password', 'confirmPassword'),
+      validators: this.MustMatch('Password', 'ConfirmPassword'),
     });
 
   get name() {
       return this.userForm?.get('Name');
   }
   get email() {
-      return this.userForm?.get('email');
+      return this.userForm?.get('Email');
   }
   get password() {
-      return this.userForm?.get('password');
+      return this.userForm?.get('Password');
   }
 
   get confirmPassword() {
-      return this.userForm?.get('confirmPassword');
+      return this.userForm?.get('ConfirmPassword');
   }
   get type() {
-      return this.userForm?.get('type');
+      return this.userForm?.get('Type');
   }
   get phone() {
-      return this.userForm?.get('phone');
+      return this.userForm?.get('Phone');
   }
 
   get dob() {
-      return this.userForm?.get('dob');
+      return this.userForm?.get('DOB');
   }
 
   get address() {
-      return this.userForm?.get('address');
+      return this.userForm?.get('Address');
   }
 
     MustMatch(controlName: string, matchingControlName: string) {
@@ -77,13 +78,14 @@ export class UserCreateComponent implements OnInit {
   }
 
   onSelectFile(e:any){
-   
+      this.fileDestination=e;
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       this.file = e.target.files[0];
         reader.onload=(event:any)=>{
         this.url = event.target.result;
+        console.log(event.target);
       }
     }
       }
@@ -92,6 +94,7 @@ export class UserCreateComponent implements OnInit {
       onConfirm(){
       
         this.userSvc.setUser({
+          fileD:this.fileDestination,
           file:this.file,
           profile:this.url,
           data:this.userForm.value
