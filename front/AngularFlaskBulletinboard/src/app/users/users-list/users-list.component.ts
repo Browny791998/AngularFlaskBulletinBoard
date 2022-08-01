@@ -31,6 +31,7 @@ export class UsersListComponent implements OnInit {
   async loadUsers() {
 
     return await this.userSvc.getAllUsers().subscribe((data: any) => {
+     
       this.users = data
       this.originalUsers = data
       this.dataSource = new MatTableDataSource(this.users);
@@ -45,8 +46,6 @@ export class UsersListComponent implements OnInit {
         this.userSvc.deleteUser(id).subscribe((data) => {
           this.loadUsers();
         });
-    
-
     }
   }
 

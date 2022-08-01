@@ -6,7 +6,6 @@ import json
 from xml.dom import NotFoundErr
 from flask_restx import Resource
 from flask import request
-
 from ..service.user_service import(
     deleteById,
     getAllUser,
@@ -18,6 +17,7 @@ from ..service.user_service import(
 from ..util.user_dto import UserDto
 from marshmallow import ValidationError
 import os
+from werkzeug.utils import secure_filename
 user_namespace = UserDto.user_namespace
 
 
@@ -34,18 +34,27 @@ class getUser(Resource):
     def get(self,id):
         return getUserById(id)
 
+@user_namespace.route("/upload")
+class uploadImage(Resource):
+    @user_namespace.doc(security = "api_key")
+    def post(self):
+        try:
+         file = request.files['image']
+            # filename = secure_filename(file.filename)
+         file.save(os.path.join('main/static/uploads/',file.filename))
+        except ValueError as e:
+            return e.args,409
+        except ValidationError as e2:
+            print(e2.args)
+            return e2.args,400
+
 @user_namespace.route("/create")
 @user_namespace.expect(UserDto.user)
 class createUser(Resource):
     @user_namespace.doc(security = "api_key")
     def post(self):
         try:
-          data= json.loads(request.data)
-          img_data = data["profile_photo"] 
-          name = data["fileName"]
-          convert_and_save(img_data,name)
-
-        #   saveUser(json.loads(request.data))
+          saveUser(json.loads(request.data))
         except ValueError as e:
             return e.args,409
         except ValidationError as e2:

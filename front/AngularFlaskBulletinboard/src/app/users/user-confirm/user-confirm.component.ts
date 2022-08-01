@@ -9,8 +9,8 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-confirm.component.css']
 })
 export class UserConfirmComponent implements OnInit {
- 
-  userDetail:any;
+
+  userDetail: any;
   constructor(private userSvc: UserService, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -22,24 +22,31 @@ export class UserConfirmComponent implements OnInit {
   }
 
   async createConfirm() {
-    
-// var image =new Image();
-//   image.src=this.userDetail.profile;
-  
-      this.userSvc.createUser(
-        {
-          name: this.userDetail.data.Name,
-          email: this.userDetail.data.Email,
-          password: this.userDetail.data.Password,
-          profile_photo:this.userDetail.profile,
-          type:this.userDetail.data.Type.toString(),
-          phone: this.userDetail.data.Phone,
-          address: this.userDetail.data.Address,
-          dob: moment(this.userDetail.data.DOB).format("YYYY-MM-DD"),
-          fileName:this.userDetail.file.name
-        }).subscribe((data: any) => {
-             this.router.navigate(['users']);
-        });
+
+    // var image =new Image();
+    //   image.src=this.userDetail.profile;
+
+
+    const formData = new FormData();
+    formData.append("image", this.userDetail.file);
+    this.userSvc.uploadImage(formData).subscribe((data: any) => {
+
+       this.userSvc.createUser(
+      {
+        name: this.userDetail.data.Name,
+        email: this.userDetail.data.Email,
+        password: this.userDetail.data.Password,
+        profile_photo:this.userDetail.file.name,
+        type: this.userDetail.data.Type.toString(),
+        phone: this.userDetail.data.Phone,
+        address: this.userDetail.data.Address,
+        dob: moment(this.userDetail.data.DOB).format("YYYY-MM-DD")
+
+      }).subscribe((data: any) => {
+        this.router.navigate(['users']);
+      });
+    })
+   
   }
 
 }

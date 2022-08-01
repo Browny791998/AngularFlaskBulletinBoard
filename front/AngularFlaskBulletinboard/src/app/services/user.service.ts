@@ -18,6 +18,13 @@ export class UserService {
     }),
   };
 
+  httpOptionsImg = {
+    headers: new HttpHeaders({
+      'Content-Type': 'image/jpeg',
+      
+    }),
+  };
+
   constructor(private http:HttpClient) { }
 
    //set User
@@ -36,6 +43,12 @@ export class UserService {
        .get<User>(this.apiURL+'/user/getAll',this.httpOptions)
    }
 
+   //upload
+   uploadImage(formData:any):Observable<any>{
+    return this.http
+      .post<any>(this.apiURL+'/user/upload',formData)
+   }
+
     // HttpClient API post() method => Create user
   createUser(user: any): Observable<User> {
     console.log(user);
@@ -51,6 +64,8 @@ export class UserService {
     return this.http
     .delete<User>(this.apiURL + '/user/delete/' +id,this.httpOptions)
   }
+
+  
 
 
 

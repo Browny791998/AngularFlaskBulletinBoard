@@ -7,6 +7,7 @@ from flask import jsonify
 from ..constant import common_constant
 import datetime
 
+
 def validateGetValueWithSchema(getPostData):
     post_schema.load(
         {
